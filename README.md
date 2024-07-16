@@ -4,6 +4,7 @@
 
 PEXESOは、高次元の類似性に基づいてデータレイク内のジョイン可能なテーブルを効率的に発見するためのフレームワークです。
 このリポジトリは、論文「Efficient Joinable Table Discovery in Data Lakes: A High-Dimensional Similarity-Based Approach」に基づいています。
+しかし、このコードは単にジョイン可能なテーブルを探索するためのものであり、PEXESOを完全に再現したコードではないことに注意してください。
 
 ## How to use
 
