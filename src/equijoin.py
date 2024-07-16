@@ -44,10 +44,10 @@ for table1, table2 in tqdm(combinations_list, desc="Processing combinations"):
                 # 両方のテーブルで閾値を超える場合に結合可能と判断
                 if intersection_rate1 >= threshold and intersection_rate2 >= threshold:
                     joinable_columns.append({
-                        'LeftTable': os.path.splitext(table1)[0],
+                        'LeftTable':table1,
                         'LeftColumnIndex': column_index1,
                         'LeftColumnName': column1,
-                        'RightTable': os.path.splitext(table2)[0],
+                        'RightTable': table2,
                         'RightColumnIndex': column_index2,
                         'RightColumnName': column2,
                         'Intersection_Rate1': intersection_rate1,
