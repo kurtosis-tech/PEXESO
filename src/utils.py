@@ -37,6 +37,7 @@ def check_invalid_series(series: pd.Series) -> bool:
     Returns:
         bool: True if the series is invalid, False otherwise.
     """
+    return False
     series = series.dropna()
     if any(contains_digit(series)) or any(is_too_short(series)):
         return True

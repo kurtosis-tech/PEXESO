@@ -83,6 +83,8 @@ def init_faiss_index(dataset_path: str, vector_dim=300):
         table_name = os.path.splitext(os.path.basename(csv_file))[0]
         df = pd.read_csv(csv_file)
         for column_index, (column_name, series) in enumerate(df.items()):
+            if column_name in ("ModifiedDate", "rowguid"):
+                continue
             if check_invalid_series(series):
                 continue
             update_faiss_index(dataset_path, faiss_index, index_list, table_name, column_index)
@@ -117,4 +119,5 @@ def search_candidate_columns(dataset_path: str, threshold=0.1):
             relative_columns = search_relative_column_with_table_index(dataset_path, faiss_index, index_list, table_name, column_index, threshold=threshold, candidates=20)
             for table_index_tuple, distance in relative_columns:
                 output.append(((table_name, column_index), table_index_tuple, distance))
+    print(output)
     return output

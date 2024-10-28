@@ -3,12 +3,14 @@ import fasttext
 import numpy as np
 import os
 import glob
+import time
 
-model = fasttext.load_model('cc.ja.300.bin')
+model = fasttext.load_model('cc.en.300.bin')
 
 def text_to_vector(text):
     words = text.split()
     word_vectors = [model.get_word_vector(word) for word in words]
+    # print(f"Vector {word_vectors} for words {words}")
     if len(word_vectors) == 0:
         return np.zeros(300)
     return np.mean(word_vectors, axis=0)
@@ -17,9 +19,8 @@ def series_to_vec(series, column_name):
     output = [text_to_vector(column_name)] 
     for index, value in series.items():
         if is_number(value):
-            output.append(np.full(300, np.nan)) 
-        else:
-            output.append(text_to_vector(value))
+            value = str(value)
+        output.append(text_to_vector(value))
     return np.array(output)
 
 def is_number(value):
@@ -60,12 +61,18 @@ def main():
     if not os.path.exists(npy_path):
         os.makedirs(npy_path)
 
+    table_count = 0
+    column_count = 0
     for file_path in file_paths:
         base_name = os.path.basename(file_path)
 
+        print(file_path)
         df = pd.read_csv(file_path)
-
+        column_count += df.shape[1]
         preprocess_file(df, base_name, npy_path)
+        table_count += 1
+    
+    print(f"{column_count} columns across {table_count} tables")
 
 if __name__ == '__main__':
     main()

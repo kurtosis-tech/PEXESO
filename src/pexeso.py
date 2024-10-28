@@ -26,12 +26,8 @@ for ((left_table_name, left_index),(right_table_name, right_index), distance) in
         left_name = left_series.name
 
         joinable_columns.append({
-            'LeftTable': left_table_name,
-            'LeftColumnIndex': left_index,
-            'LeftColumnName': left_series.name,
-            'RightTable': right_table_name,
-            'RightColumnIndex': right_index,
-            'RightColumnName': right_series.name,
+            'LeftColumn': f"{left_table_name}.{left_series.name}",
+            'RightColumn': f"{right_table_name}.{right_series.name}",
             'RoughScore': distance,
             'RelationRatio': relation_ratio,
         })
